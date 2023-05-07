@@ -9,7 +9,7 @@ import time
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LinearRegression
 
 
 st.set_page_config(
@@ -198,28 +198,35 @@ if __name__ == "__main__":
 '---'
 
 # 09 ------------------------------------------------------------------------------------------------------------------------------
-st.title('Pesquisar na Wikipedia')
+st.title("Previsão de Vendas")
 
-def realizar_pesquisa(termo):
-    try:
-        conteudo = wikipedia.summary(termo)
-    except wikipedia.exceptions.DisambiguationError as e:
-        opcoes = e.options[:5]  # Exibir apenas as 5 primeiras opções
-        st.write("A busca retornou várias opções. Por favor, especifique:")
-        st.write(opcoes)
-        return None
-    except wikipedia.exceptions.PageError:
-        st.write("Nenhuma página encontrada para o termo especificado.")
-        return None
+def realizar_previsao(df, meses):
+    X = df['Mes'].values.reshape(-1, 1)
+    y = df['Vendas'].values
+
+    modelo = LinearRegression()
+    modelo.fit(X, y)
+
+    proximos_meses = df['Mes'].max() + pd.date_range(start='1/1/2023', periods=meses, freq='M')
+    previsao_vendas = modelo.predict(proximos_meses.values.reshape(-1, 1))
+
+    previsao_df = pd.DataFrame({
+        'Mês': proximos_meses,
+        'Previsão de Vendas': previsao_vendas
+    })
+
+    return previsao_df
+
+def mai7():
+
+    df = pd.read_csv('dados.csv')
+    st.write(df)
+
+    meses = st.slider("Selecione o número de meses para a previsão", min_value=1, max_value=24, value=12)
     
-    return conteudo
-
-def main7():
-    termo = st.text_input("Digite o termo a ser pesquisado")
-    if st.button("Pesquisar"):
-        resultado = realizar_pesquisa(termo)
-        if resultado:
-            st.write(resultado)
+    if st.button("Realizar Previsão"):
+        previsao_df = realizar_previsao(df, meses)
+        st.write(previsao_df)
 
 if __name__ == "__main__":
     main7()
