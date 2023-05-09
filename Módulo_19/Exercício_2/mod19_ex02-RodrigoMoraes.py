@@ -50,7 +50,7 @@ def df_to_excel(df: pd.DataFrame):
 def main():
     st.set_page_config(
         page_title="EBAC | Módulo 19 | Streamlit II | Exercício 1",
-        page_icon="img/telmarketing_icon.png",
+        page_icon="https://raw.githubusercontent.com/RodzMoraes/curso-ebac/main/M%C3%B3dulo_19/Exerc%C3%ADcio_2/img/telmarketing_icon.png",
         layout="wide",
         initial_sidebar_state="expanded",
     )
@@ -78,12 +78,12 @@ def main():
     st.markdown(body="---")
 
     # SIDEBAR
-    image = Image.open(fp='img/Bank-Branding.jpg')
-    st.sidebar.image(image=image)
-    # st.sidebar.markdown(
-    #    body='<img src="img/Bank-Branding.jpg" width=100%>',
-    #    unsafe_allow_html=True,
-    #)
+    # image = Image.open(fp='Módulo_19/Exercício_2/img/Bank-Branding.jpg')
+    # st.sidebar.image(image=image)
+    st.sidebar.markdown(
+        body='<img src="https://raw.githubusercontent.com/RodzMoraes/curso-ebac/main/M%C3%B3dulo_19/Exerc%C3%ADcio_2/img/Bank-Branding.jpg" width=100%>',
+        unsafe_allow_html=True,
+    )
 
     st.sidebar.write("## Suba o arquivo")
     data_file_1 = st.sidebar.file_uploader(
@@ -94,7 +94,7 @@ def main():
         start = timeit.default_timer()
 
         bank_raw = load_data(
-            # file_data="data/input/bank-additional-full.csv",
+            # file_data="https://raw.githubusercontent.com/RodzMoraes/curso-ebac/main/M%C3%B3dulo_19/Exerc%C3%ADcio_2/data/input/bank-additional-full.csv",
             file_data=data_file_1,
             sep=";",
         )
@@ -223,7 +223,7 @@ def main():
         if graph_type == "Barras":
             sns.barplot(
                 x=bank_raw_target_pct.index,
-                y="y",
+                y="proportion",
                 data=bank_raw_target_pct,
                 ax=axes[0],
             )
@@ -231,7 +231,7 @@ def main():
             axes[0].set_title(label="Dados brutos", fontweight="bold")
             sns.barplot(
                 x=bank_target_pct.index,
-                y="y",
+                y="proportion",
                 data=bank_target_pct,
                 ax=axes[1],
             )
@@ -239,10 +239,10 @@ def main():
             axes[1].set_title(label="Dados filtrados", fontweight="bold")
         else:
             bank_raw_target_pct.plot(
-                kind="pie", autopct="%.2f", y="y", ax=axes[0]
+                kind="pie", autopct="%.2f", y="proportion", ax=axes[0]
             )
             axes[0].set_title("Dados brutos", fontweight="bold")
-            bank_target_pct.plot(kind="pie", autopct="%.2f", y="y", ax=axes[1])
+            bank_target_pct.plot(kind="pie", autopct="%.2f", y="proportion", ax=axes[1])
             axes[1].set_title("Dados filtrados", fontweight="bold")
         st.write("## Proporção de aceite")
         st.pyplot(plt)
