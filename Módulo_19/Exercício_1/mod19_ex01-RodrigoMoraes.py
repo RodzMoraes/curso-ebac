@@ -37,7 +37,7 @@ def main():
     )
 
     # SIDEBAR
-    image = Image.open(fp='img/Bank-Branding.jpg')
+    image = Image.open(fp='./img/Bank-Branding.jpg')
     st.sidebar.image(image=image)
 
     # TÍTULO
