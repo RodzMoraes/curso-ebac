@@ -161,7 +161,7 @@ def main():
         normalize=True).to_frame() * 100
     bank_raw_target_pct = bank_raw_target_pct.sort_index()
     sns.barplot(x=bank_raw_target_pct.index,
-                y='y',
+                y='proportion',
                 data=bank_raw_target_pct,
                 ax=axes[0])
     axes[0].bar_label(container=axes[0].containers[0])
@@ -170,7 +170,7 @@ def main():
     bank_target_pct = bank['y'].value_counts(normalize=True).to_frame() * 100
     bank_target_pct = bank_target_pct.sort_index()
     sns.barplot(x=bank_target_pct.index,
-                y='y',
+                y='proportion',
                 data=bank_target_pct,
                 ax=axes[1])
     axes[1].bar_label(container=axes[1].containers[0])
